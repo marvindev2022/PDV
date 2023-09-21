@@ -164,8 +164,8 @@ export default class UsersController {
           id,
         },
       });
-
-      return res.json(user);
+      if(!user)  return res.status(400).json({ error: "Usuário não encontrado." });
+      return res.json({...user, password: undefined});
     } catch (error: any) {
       return res.status(500).json({ error: "Erro desconhecido no servidor." });
     }

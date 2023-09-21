@@ -24,11 +24,44 @@ router.post(
   }
 );
 router.put(
-  "/product/",
+  "/product/:id",
   async (req, res, next) => await ValidateToken.validate(req, res, next),
   async (req, res) => {
     try {
       return await productsController.update(req, res);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+router.delete(
+  "/product/",
+  async (req, res, next) => await ValidateToken.validate(req, res, next),
+  async (req, res) => {
+    try {
+      return await productsController.delete(req, res);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+router.get(
+  "/products",
+  async (req, res, next) => await ValidateToken.validate(req, res, next),
+  async (req, res) => {
+    try {
+      return await productsController.list(req, res);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+router.get(
+  "/product/:id",
+  async (req, res, next) => await ValidateToken.validate(req, res, next),
+  async (req, res) => {
+    try {
+      return await productsController.listOne(req, res);
     } catch (e) {
       console.log(e);
     }
@@ -43,7 +76,7 @@ router.post(
   async (req, res) => await registeredUserController.register(req, res)
 );
 router.get(
-  "/user/",
+  "/user/:id",
   async (req, res) => await registeredUserController.listOne(req, res)
 );
 router.get(
@@ -51,7 +84,8 @@ router.get(
   async (req, res) => await registeredUserController.list(req, res)
 );
 router.delete(
-  "/user/",
+  "/user/:id",
+  async (req, res, next) => await ValidateToken.validate(req, res, next),
   async (req, res) => await registeredUserController.delete(req, res)
 );
 router.put(

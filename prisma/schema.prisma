@@ -19,14 +19,14 @@ model users {
 }
 
 model clients {
-    id        String   @id @default(uuid())
-    email     String   @unique
+    id        String     @id @default(uuid())
+    email     String     @unique
     name      String
     password  String
-    cpf       String   @unique
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    vehicles   vehicles[]
+    cpf       String     @unique
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+    vehicles  vehicles[]
     orders    orders[]
 }
 
@@ -56,43 +56,43 @@ model subcategories {
     updatedAt DateTime   @updatedAt
     products  products[]
 }
+
 model products {
-  id            Int      @id @default(autoincrement())
-  name          String   @unique
-  description   String?
-  sku           String
-  barcode       String
-  manufacturer  String
-  supplier      String
-  purchasePrice Float
-  costPrice     Float
-  markup        Float
-  sellingPrice  Float
-  profitAmount  Float
-  taxes         Json
-  shippingCost  Float
-  fees          Json
-  quantityInStock Int
-  reorderLevel  Int
-  location      String
-  notes         String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  categoryId    String
-  subcategoryId String
-  category      categories @relation(fields: [categoryId], references: [id])
-  subcategory   subcategories @relation(fields: [subcategoryId], references: [id])
-  orders        orders[]
+    id              String        @id @default(uuid())
+    name            String        @unique
+    description     String?
+    sku             String
+    barcode         String
+    manufacturer    String
+    supplier        String
+    purchasePrice   Float
+    costPrice       Float
+    markup          Float
+    sellingPrice    Float
+    profitAmount    Float
+    taxes           Json
+    shippingCost    Float
+    fees            Json
+    quantityInStock Int
+    reorderLevel    Int
+    location        String
+    notes           String?
+    createdAt       DateTime      @default(now())
+    updatedAt       DateTime      @updatedAt
+    categoryId      String
+    subcategoryId   String
+    category        categories    @relation(fields: [categoryId], references: [id])
+    subcategory     subcategories @relation(fields: [subcategoryId], references: [id])
+    orders          orders[]
 }
 
-
 model orders {
-    id        String   @id @default(uuid())
+    id        String     @id @default(uuid())
     userId    String
     clientId  String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
     products  products[]
-    client    clients  @relation(fields: [clientId], references: [id])
-    user      users    @relation(fields: [userId], references: [id])
+    client    clients    @relation(fields: [clientId], references: [id])
+    user      users      @relation(fields: [userId], references: [id])
 }
