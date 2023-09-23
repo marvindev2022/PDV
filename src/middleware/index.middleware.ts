@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
-const jwtSecret = process.env.JWT_SECRET;
+const jwtSecret = process.env.JWT_SECRET as string;
 
 export interface HttpRequest {
   body:any
@@ -39,7 +39,7 @@ class ValidateToken {
         return res.status(400).json({ message: "Please log in" });
 
       
-    const decodedToken = jwt.verify(bearer, jwtSecret as string) as { userId: string }; // Certifique-se de que userId existe no token
+    const decodedToken = jwt.verify(bearer, jwtSecret as string) as { userId: string };
     const userId = decodedToken.userId;
   
     const user = await this.prisma.users.findUnique({
