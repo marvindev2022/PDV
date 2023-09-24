@@ -1,11 +1,11 @@
-import express from 'express';
-import router from './Router/router';
-import cors from 'cors';
+import express from "express";
+import router from "./Router/router";
+import cors from "cors";
+
 const app = express();
 const port = 3000;
-app.use(cors(),express.json(),router);
 
-
-app.listen(port, () => {
-  console.log(`Server is listening at http://localhost:${port} 🚀 `);
-});
+app.use(cors(), express.json());
+app.listen(port, () =>
+  console.log(`Server is listening at http://localhost:${port} 🚀 `)
+);

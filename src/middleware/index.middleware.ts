@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
-const jwtSecret = process.env.JWT_SECRET;
+const jwtSecret = process.env.JWT_SECRET as string;
 
 export interface HttpRequest {
-  body:any
+  body: any;
   headers?: {
     authorization: string;
   };
@@ -18,7 +18,7 @@ export interface HttpRequest {
   };
 }
 export interface HttpResponse {
-  body:any
+  body: any;
   status: any;
   json: any;
 }
@@ -30,28 +30,29 @@ class ValidateToken {
     this.prisma = new PrismaClient();
   }
 
-  public async validate(req:any, res: any, next: any) {
-    const authorization   = req.headers?.authorization as string;
+  public async validate(req: any, res: any, next: any) {
+    const authorization = req.headers?.authorization as string;
     try {
       const bearer = authorization.split(" ")[1];
 
       if (!authorization)
         return res.status(400).json({ message: "Please log in" });
 
-      
-    const decodedToken = jwt.verify(bearer, jwtSecret as string) as { userId: string }; // Certifique-se de que userId existe no token
-    const userId = decodedToken.userId;
-  
-    const user = await this.prisma.users.findUnique({
-      where: { id: userId },
-    });
+      const decodedToken = jwt.verify(bearer, jwtSecret as string) as {
+        userId: string;
+      };
+      const userId = decodedToken.userId;
+
+      const user = await this.prisma.users.findUnique({
+        where: { id: userId },
+      });
 
       if (!user) return res.status(401).json({ message: "Unauthorized user" });
 
       req.user = user;
       next();
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.status(404).json("Error token");
     }
   }

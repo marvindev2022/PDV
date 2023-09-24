@@ -31,14 +31,16 @@ model clients {
 }
 
 model vehicles {
-    id        String   @id @default(uuid())
-    name      String
-    model     String
-    plate     String   @unique
-    clientId  String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    client    clients  @relation(fields: [clientId], references: [id])
+    id           String   @id @default(uuid())
+    name         String
+    model        String
+    plate        String   @unique
+    clientId     String
+    brand        String
+    year         String
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+    client       clients  @relation(fields: [clientId], references: [id])
 }
 
 model categories {
