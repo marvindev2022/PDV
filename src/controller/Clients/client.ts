@@ -3,6 +3,11 @@ import { PrismaClient } from "@prisma/client";
 export default class ClientsController {
   private prisma = new PrismaClient();
 
+  private handleCommonError(res: any, error: Error) {
+    console.error("Internal Server Error:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+
   async create(req: any, res: any) {
     try {
       const { name, email, password, cpf } = req.body;
@@ -17,9 +22,10 @@ export default class ClientsController {
       });
 
       return res.status(201).json(client);
-    } catch (error) {
-      console.error("Error in create:", error);
-      return res.status(500).json({ error: "Internal server error" });
+    } catch (error:any) {
+      return this.handleCommonError(res, error);
+    } finally {
+      await this.prisma.$disconnect();
     }
   }
 
@@ -33,9 +39,10 @@ export default class ClientsController {
       });
 
       return res.status(200).json(clients);
-    } catch (error) {
-      console.error("Error in list:", error);
-      return res.status(500).json({ error: "Internal server error" });
+    } catch (error:any) {
+      return this.handleCommonError(res, error);
+    } finally {
+      await this.prisma.$disconnect();
     }
   }
 
@@ -54,9 +61,10 @@ export default class ClientsController {
       });
 
       return res.status(200).json(client);
-    } catch (error) {
-      console.error("Error in listOne:", error);
-      return res.status(500).json({ error: "Internal server error" });
+    } catch (error:any) {
+      return this.handleCommonError(res, error);
+    } finally {
+      await this.prisma.$disconnect();
     }
   }
 
@@ -71,9 +79,10 @@ export default class ClientsController {
       });
 
       return res.status(200).json(client);
-    } catch (error) {
-      console.error("Error in delete:", error);
-      return res.status(500).json({ error: "Internal server error" });
+    } catch (error:any) {
+      return this.handleCommonError(res, error);
+    } finally {
+      await this.prisma.$disconnect();
     }
   }
 
@@ -95,9 +104,10 @@ export default class ClientsController {
       });
 
       return res.status(200).json(client);
-    } catch (error) {
-      console.error("Error in update:", error);
-      return res.status(500).json({ error: "Internal server error" });
+    } catch (error:any) {
+      return this.handleCommonError(res, error);
+    } finally {
+      await this.prisma.$disconnect();
     }
   }
 
@@ -116,9 +126,10 @@ export default class ClientsController {
         },
       });
       return res.status(200).json(vehicle);
-    } catch (error) {
-      console.error("Error in vehicleAdd:", error);
-      return res.status(500).json({ error: "Internal server error" });
+    } catch (error:any) {
+      return this.handleCommonError(res, error);
+    } finally {
+      await this.prisma.$disconnect();
     }
   }
 
@@ -131,9 +142,10 @@ export default class ClientsController {
         },
       });
       return res.status(200).json(vehicle);
-    } catch (error) {
-      console.error("Error in vehicleList:", error);
-      return res.status(500).json({ error: "Internal server error" });
+    } catch (error:any) {
+      return this.handleCommonError(res, error);
+    } finally {
+      await this.prisma.$disconnect();
     }
   }
 
@@ -147,9 +159,10 @@ export default class ClientsController {
       });
       console.log(vehicle);
       return res.status(200).json(vehicle);
-    } catch (error) {
-      console.error("Error in vehicleListOne:", error);
-      return res.status(500).json({ error: "Internal server error" });
+    } catch (error:any) {
+      return this.handleCommonError(res, error);
+    } finally {
+      await this.prisma.$disconnect();
     }
   }
 
@@ -162,9 +175,10 @@ export default class ClientsController {
         },
       });
       return res.status(200).json(vehicle);
-    } catch (error) {
-      console.error("Error in vehicleDelete:", error);
-      return res.status(500).json({ error: "Internal server error" });
+    } catch (error:any) {
+      return this.handleCommonError(res, error);
+    } finally {
+      await this.prisma.$disconnect();
     }
   }
 
@@ -190,9 +204,10 @@ export default class ClientsController {
         },
       });
       return res.status(200).json(vehicle);
-    } catch (error) {
-      console.error("Error in vehicleEdit:", error);
-      return res.status(500).json({ error: "Internal server error" });
+    } catch (error:any) {
+      return this.handleCommonError(res, error);
+    } finally {
+      await this.prisma.$disconnect();
     }
   }
 }
