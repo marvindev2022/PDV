@@ -5,7 +5,7 @@ import cors from "cors";
 const app = express();
 const port = 3000;
 
-app.use(cors(), express.json());
+app.use(cors(), express.json(),router);
 app.listen(port, () =>
   console.log(`Server is listening at http://localhost:${port} 🚀 `)
 );
