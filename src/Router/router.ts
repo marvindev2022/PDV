@@ -3,12 +3,13 @@ import UsersController from "../controller/Users/users";
 import ValidateToken from "./../middleware/index.middleware";
 import ProductsController from "../controller/Products/product";
 import ClientsController from "../controller/Clients/client";
+import SalesController from "../controller/Sales/sales";
 
 const router = express();
 const registeredUserController = new UsersController();
 const productsController = new ProductsController();
 const clientsController = new ClientsController();
-
+const salesController = new SalesController();
 router.get("/", (req, res) => {
   res.send("MVR TECH");
 });
@@ -55,8 +56,6 @@ router.get("/product/:id", async (req, res) => {
     console.log(e);
   }
 });
-
-
 
 router.post(
   "/user/",
@@ -117,5 +116,21 @@ router.get(
   "/client/:id/vehicles",
   async (req, res) => await clientsController.vehicleList(req, res)
 );
+
+router.post(
+  "/sales/",
+  async (req, res) => await salesController.create(req, res)
+);
+
+router.put(
+  "/sales/:id",
+  async (req, res) => await salesController.update(req, res)
+);
+router.delete(
+  "/sales/:id",
+  async (req, res) => await salesController.delete(req, res)
+);
+router.get("/sales/:id", async (req, res) => await salesController.list(req, res));
+router.get("/sales/", async (req, res) => await salesController.listOne(req, res));
 
 export default router;
